@@ -1,26 +1,60 @@
 import { Injectable } from '@nestjs/common';
 import { CreateSaleDto } from './dto/create-sale.dto';
 import { UpdateSaleDto } from './dto/update-sale.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Sale } from './entities/sale.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class SaleService {
-  create(createSaleDto: CreateSaleDto) {
-    return 'This action adds a new sale';
+  constructor(
+    @InjectRepository(Sale)
+    private readonly saleRepository: Repository<Sale>,
+  ) {}
+
+  async create(createSaleDto: CreateSaleDto) {
+    const request = this.saleRepository.create(createSaleDto);
+    await this.saleRepository.save(request);
+
+    return { message: 'Venda Criada', request };
   }
 
-  findAll() {
-    return `This action returns all sale`;
+  async findAll() {
+    const allSales = await this.saleRepository.find();
+    if (allSales.length === 0) {
+      return { message: 'Nenhuma venda encontrada' };
+    } else {
+      return { found: allSales };
+    }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} sale`;
+  async findOne(id: string) {
+    const sale = await this.saleRepository.findOne({ where: { id } });
+    if (!sale) {
+      return { message: 'Venda não encontrada' };
+    } else {
+      return { found: sale };
+    }
   }
 
-  update(id: number, updateSaleDto: UpdateSaleDto) {
-    return `This action updates a #${id} sale`;
+  async update(id: string, updateSaleDto: UpdateSaleDto) {
+    const sale = await this.saleRepository.findOne({ where: { id } });
+    if (!sale) {
+      return { message: 'Venda não encontrada' };
+    } else {
+      Object.assign(sale, updateSaleDto);
+    }
+    await this.saleRepository.update(id, sale);
+    return { message: 'Venda Atualizada com sucesso', sale };
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} sale`;
+  async remove(id: string) {
+    const sale = await this.saleRepository.findOne({ where: { id } });
+    if (!sale) {
+      return { message: 'Venda não encontrada' };
+    } else {
+      await this.saleRepository.delete(id);
+      return { message: `Venda foi deletada com sucesso!`, saleID: id };
+    }
   }
 }
