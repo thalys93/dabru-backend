@@ -3,39 +3,39 @@ import {
   CreateDateColumn,
   Entity,
   PrimaryGeneratedColumn,
-} from 'typeorm';
+} from "typeorm";
 
-@Entity('product')
+@Entity("product")
 export class Product {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column({ nullable: false, type: 'text' })
+  @Column({ nullable: false, type: "text" })
   name: string;
 
-  @Column({ nullable: false, type: 'numeric' })
+  @Column({ nullable: false, type: "numeric" })
   value: number;
 
-  @Column({ type: 'jsonb' })
+  @Column({ type: "jsonb" })
   details: ProductDetails[];
 
-  @CreateDateColumn({ type: 'time with time zone' })
+  @CreateDateColumn({ type: "time with time zone" })
   publishDate: Date;
 
-  @Column({ nullable: false, type: 'text' })
+  @Column({ nullable: false, type: "text" })
   description: string;
 
-  @Column({ nullable: false, type: 'numeric' })
+  @Column({ nullable: false, type: "numeric" })
   quantity: number;
 
-  @Column({ type: 'jsonb' })
+  @Column({ type: "jsonb" })
   colors: Colors[];
 
-  @Column({ type: 'numeric', nullable: true, default: 0 })
+  @Column({ type: "numeric", nullable: true, default: 0 })
   total: number;
 }
 
-export class ProductDetails {  
+export class ProductDetails {
   resume: string;
   imgLink: string;
   observation: string;

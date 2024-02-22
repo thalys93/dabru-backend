@@ -1,33 +1,33 @@
-import { Request } from 'src/request/entities/request.entity';
+import { Request } from "src/request/entities/request.entity";
 import {
   Column,
   CreateDateColumn,
   Entity,
   OneToMany,
   PrimaryGeneratedColumn,
-} from 'typeorm';
+} from "typeorm";
 
-@Entity('client')
+@Entity("client")
 export class Client {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column({ nullable: false, type: 'text' })
+  @Column({ nullable: false, type: "text" })
   name: string;
 
-  @Column({ nullable: false, type: 'text' })
+  @Column({ nullable: false, type: "text" })
   lastName: string;
 
-  @Column({ nullable: false, type: 'text' })
+  @Column({ nullable: false, type: "text" })
   email: string;
 
-  @Column({ nullable: false, type: 'text' })
+  @Column({ nullable: false, type: "text" })
   phone: string;
 
-  @CreateDateColumn({ type: 'time' })
+  @CreateDateColumn({ type: "time" })
   createdAt: Date;
 
-  @Column({ nullable: false, type: 'jsonb' })
+  @Column({ nullable: false, type: "jsonb" })
   address: Address[];
 
   //Um cliente tem varios pedidos
