@@ -4,7 +4,6 @@ import { UsersModule } from './users/users.module';
 import { ClientsModule } from './clients/clients.module';
 import { RequestModule } from './request/request.module';
 import { SaleModule } from './sale/sale.module';
-import { AddressModule } from './address/address.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { config } from './configs/orm.config';
 
@@ -15,7 +14,6 @@ import { config } from './configs/orm.config';
     ClientsModule,
     RequestModule,
     SaleModule,
-    AddressModule,
     TypeOrmModule.forRoot(config),
   ],
   controllers: [],

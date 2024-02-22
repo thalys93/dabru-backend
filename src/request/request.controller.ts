@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { RequestService } from './request.service';
 import { CreateRequestDto } from './dto/create-request.dto';
 import { UpdateRequestDto } from './dto/update-request.dto';
@@ -14,23 +22,23 @@ export class RequestController {
     return this.requestService.create(createRequestDto);
   }
 
-  @Get()
+  @Get('/all')
   findAll() {
     return this.requestService.findAll();
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.requestService.findOne(+id);
+    return this.requestService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateRequestDto: UpdateRequestDto) {
-    return this.requestService.update(+id, updateRequestDto);
+    return this.requestService.update(id, updateRequestDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.requestService.remove(+id);
+    return this.requestService.remove(id);
   }
 }

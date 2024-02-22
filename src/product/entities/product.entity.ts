@@ -19,7 +19,7 @@ export class Product {
   @Column({ type: 'jsonb' })
   details: ProductDetails[];
 
-  @CreateDateColumn({ type: 'time' })
+  @CreateDateColumn({ type: 'time with time zone' })
   publishDate: Date;
 
   @Column({ nullable: false, type: 'text' })
@@ -35,8 +35,7 @@ export class Product {
   total: number;
 }
 
-export class ProductDetails {
-  id: string;
+export class ProductDetails {  
   resume: string;
   imgLink: string;
   observation: string;

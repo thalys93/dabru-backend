@@ -20,7 +20,12 @@ export class ProductService {
   }
 
   async findAll() {
-    return { found: await this.productRepository.find() };
+    const allProducts = await this.productRepository.find();
+    if (allProducts.length === 0) {
+      return { message: 'Nenhum produto encontrado' };
+    } else {
+      return { found: allProducts };
+    }
   }
 
   async findOne(id: string) {
