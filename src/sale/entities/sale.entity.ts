@@ -2,10 +2,13 @@ import { Client } from "src/clients/entities/client.entity";
 import { Request } from "src/request/entities/request.entity";
 import {
   Column,
+  CreateDateColumn,
+  DeleteDateColumn,
   Entity,
   ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from "typeorm";
 
 @Entity("sale")
@@ -27,4 +30,13 @@ export class Sale {
 
   @Column({ nullable: false, type: "boolean", default: false })
   failed: boolean;
+
+  @CreateDateColumn({ name: "created_at" })
+  createdAt: Date;
+
+  @UpdateDateColumn({ name: "updated_at" })
+  updatedAt: Date;
+
+  @DeleteDateColumn({ name: "deleted_at" })
+  deletedAt: Date;
 }

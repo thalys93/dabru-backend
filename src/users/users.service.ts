@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { UpdateUserDto } from "./dto/update-user.dto";
 import { InjectRepository } from "@nestjs/typeorm";
@@ -20,7 +20,9 @@ export class UsersService {
   }
 
   async findAll() {
-    const allUsers = await this.usersRepository.find();
+    const allUsers = await this.usersRepository.find({
+      select: ["id", "name", "email"],
+    });
     if (allUsers.length === 0) {
       return { message: "Nenhum usuário encontrado" };
     } else {
@@ -34,6 +36,14 @@ export class UsersService {
       return { message: "Usuário não encontrado" };
     } else {
       return { found: user };
+    }
+  }
+
+  async findByEmail(email: string) {
+    try {
+      return await this.usersRepository.findOneOrFail({ where: { email } });
+    } catch (e) {
+      throw new NotFoundException("Usuário não encontrado");
     }
   }
 

@@ -5,6 +5,8 @@ import {
   Entity,
   OneToMany,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
+  DeleteDateColumn,
 } from "typeorm";
 
 @Entity("client")
@@ -33,6 +35,12 @@ export class Client {
   //Um cliente tem varios pedidos
   @OneToMany(() => Request, (request: Request) => request.client_)
   public request: Request[];
+
+  @UpdateDateColumn({ name: "updated_at" })
+  updatedAt: Date;
+
+  @DeleteDateColumn({ name: "deleted_at" })
+  deletedAt: Date;
 }
 
 export class Address {

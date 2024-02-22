@@ -3,6 +3,8 @@ import {
   CreateDateColumn,
   Entity,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
+  DeleteDateColumn,
 } from "typeorm";
 
 @Entity("product")
@@ -21,6 +23,12 @@ export class Product {
 
   @CreateDateColumn({ type: "time with time zone" })
   publishDate: Date;
+
+  @UpdateDateColumn({ name: "updated_at" })
+  updatedAt: Date;
+
+  @DeleteDateColumn({ name: "deleted_at" })
+  deletedAt: Date;
 
   @Column({ nullable: false, type: "text" })
   description: string;

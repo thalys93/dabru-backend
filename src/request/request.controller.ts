@@ -6,14 +6,16 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from "@nestjs/common";
 import { RequestService } from "./request.service";
 import { CreateRequestDto } from "./dto/create-request.dto";
 import { UpdateRequestDto } from "./dto/update-request.dto";
 import { ApiTags } from "@nestjs/swagger";
+import { AuthGuard } from "@nestjs/passport";
 
 @ApiTags("Pedidos")
-@Controller("request")
+@Controller("api/request")
 export class RequestController {
   constructor(private readonly requestService: RequestService) {}
 
@@ -21,8 +23,15 @@ export class RequestController {
   create(@Body() createRequestDto: CreateRequestDto) {
     return this.requestService.create(createRequestDto);
   }
+}
 
-  @Get("/all")
+@ApiTags("Pedidos - Requer Autenticação")
+@UseGuards(AuthGuard("jwt"))
+@Controller("auth/request")
+export class RequestProtectedController {
+  constructor(private readonly requestService: RequestService) {}
+
+  @Get("")
   findAll() {
     return this.requestService.findAll();
   }

@@ -6,14 +6,16 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from "@nestjs/common";
 import { ProductService } from "./product.service";
 import { CreateProductDto } from "./dto/create-product.dto";
 import { UpdateProductDto } from "./dto/update-product.dto";
 import { ApiTags } from "@nestjs/swagger";
+import { AuthGuard } from "@nestjs/passport";
 
 @ApiTags("Produtos")
-@Controller("products")
+@Controller("api/products")
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
@@ -22,14 +24,15 @@ export class ProductController {
     return this.productService.findAll();
   }
 
-  @Get("/pr/:id")
+  @Get(":id")
   findOne(@Param("id") id: string) {
     return this.productService.findOne(id);
   }
 }
 
-@ApiTags("Produtos Protegidos")
-@Controller("products/protected/")
+@ApiTags("Produtos - Requer Autenticação")
+@UseGuards(AuthGuard("jwt"))
+@Controller("auth/product")
 export class ProductProtectedController {
   constructor(private readonly productService: ProductService) {}
 
@@ -38,12 +41,12 @@ export class ProductProtectedController {
     return this.productService.create(createProductDto);
   }
 
-  @Patch("/pr/:id")
+  @Patch(":id")
   update(@Param("id") id: string, @Body() updateProductDto: UpdateProductDto) {
     return this.productService.update(id, updateProductDto);
   }
 
-  @Delete("/pr/:id")
+  @Delete(":id")
   remove(@Param("id") id: string) {
     return this.productService.remove(id);
   }

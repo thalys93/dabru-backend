@@ -6,14 +6,17 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from "@nestjs/common";
 import { SaleService } from "./sale.service";
 import { CreateSaleDto } from "./dto/create-sale.dto";
 import { UpdateSaleDto } from "./dto/update-sale.dto";
 import { ApiTags } from "@nestjs/swagger";
+import { AuthGuard } from "@nestjs/passport";
 
-@ApiTags("Vendas")
-@Controller("sale")
+@ApiTags("Vendas - Requer Autenticação")
+@UseGuards(AuthGuard("jwt"))
+@Controller("api/sale")
 export class SaleController {
   constructor(private readonly saleService: SaleService) {}
 
@@ -22,7 +25,7 @@ export class SaleController {
     return this.saleService.create(createSaleDto);
   }
 
-  @Get("/all")
+  @Get("")
   findAll() {
     return this.saleService.findAll();
   }

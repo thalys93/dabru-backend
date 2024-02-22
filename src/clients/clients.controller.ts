@@ -6,14 +6,16 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from "@nestjs/common";
 import { ClientsService } from "./clients.service";
 import { CreateClientDto } from "./dto/create-client.dto";
 import { UpdateClientDto } from "./dto/update-client.dto";
 import { ApiTags } from "@nestjs/swagger";
+import { AuthGuard } from "@nestjs/passport";
 
 @ApiTags("Clientes")
-@Controller("clients")
+@Controller("api/clients")
 export class ClientsController {
   constructor(private readonly clientsService: ClientsService) {}
 
@@ -21,8 +23,14 @@ export class ClientsController {
   create(@Body() createClientDto: CreateClientDto) {
     return this.clientsService.create(createClientDto);
   }
+}
+@ApiTags("Clientes - Requer Autenticação")
+@UseGuards(AuthGuard("jwt"))
+@Controller("auth/clients")
+export class ClientsProtectedController {
+  constructor(private readonly clientsService: ClientsService) {}
 
-  @Get("/all")
+  @Get("/")
   findAll() {
     return this.clientsService.findAll();
   }
