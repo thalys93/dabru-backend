@@ -21,7 +21,7 @@ export class UsersService {
 
   async findAll() {
     const allUsers = await this.usersRepository.find({
-      select: ["id", "name", "email"],
+      select: ["id", "name", "email", "avatar", "role"],
     });
     if (allUsers.length === 0) {
       return { message: "Nenhum usuário encontrado" };

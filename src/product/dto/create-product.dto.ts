@@ -3,6 +3,9 @@ import { Colors, ProductDetails } from "../entities/product.entity";
 
 export class CreateProductDto {
   @ApiProperty()
+  id: string;
+
+  @ApiProperty()
   name: string;
 
   @ApiProperty()

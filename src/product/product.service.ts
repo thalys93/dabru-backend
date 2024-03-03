@@ -16,15 +16,15 @@ export class ProductService {
     const product = this.productRepository.create(createProductDto);
 
     await this.productRepository.save(product);
-    return { message: "Produto criado com sucesso", product };
+    return { message: "Produto criado com sucesso", product, statusCode: 201 };
   }
 
   async findAll() {
     const allProducts = await this.productRepository.find();
     if (allProducts.length === 0) {
-      return { message: "Nenhum produto encontrado" };
+      return { message: "Nenhum produto encontrado", statusCode: 404 };
     } else {
-      return { found: allProducts };
+      return { found: allProducts, statusCode: 200 };
     }
   }
 
@@ -45,7 +45,11 @@ export class ProductService {
       Object.assign(product, updateProductDto);
     }
     await this.productRepository.update(id, product);
-    return { message: "Produto Atualizado com sucesso", product };
+    return {
+      message: "Produto Atualizado com sucesso",
+      product,
+      statusCode: 200,
+    };
   }
 
   async remove(id: string) {
@@ -54,6 +58,10 @@ export class ProductService {
       throw new NotFoundException("Produto não encontrado");
     }
     await this.productRepository.delete(id);
-    return { message: `Produto foi deletado com sucesso!`, productID: id };
+    return {
+      message: `Produto foi deletado com sucesso!`,
+      productID: id,
+      statusCode: 200,
+    };
   }
 }

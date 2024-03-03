@@ -2,14 +2,14 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  PrimaryGeneratedColumn,
   UpdateDateColumn,
   DeleteDateColumn,
+  PrimaryColumn,
 } from "typeorm";
 
 @Entity("product")
 export class Product {
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryColumn({ nullable: false, type: "text" })
   id: string;
 
   @Column({ nullable: false, type: "text" })
@@ -44,7 +44,6 @@ export class Product {
 }
 
 export class ProductDetails {
-  resume: string;
   imgLink: string;
   observation: string;
   type: string;

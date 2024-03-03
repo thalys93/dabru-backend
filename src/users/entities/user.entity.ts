@@ -4,6 +4,7 @@ import {
   CreateDateColumn,
   Entity,
   PrimaryGeneratedColumn,
+  Unique,
   UpdateDateColumn,
 } from "typeorm";
 import { Exclude } from "class-transformer";
@@ -18,7 +19,14 @@ export class User {
   name: string;
 
   @Column({ nullable: false, type: "text" })
+  lastName: string;
+
+  @Column({ nullable: false, type: "text" })
+  @Unique(["email"])
   email: string;
+
+  @Column({ nullable: true, type: "text" })
+  avatar: string;
 
   @Column({ nullable: false, type: "text" })
   @Exclude()

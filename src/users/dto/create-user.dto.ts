@@ -10,8 +10,15 @@ export class CreateUserDto {
 
   @IsNotEmpty()
   @ApiProperty()
+  lastName: string;
+
+  @IsNotEmpty()
+  @ApiProperty()
   @Matches(RegExHelper.email, { message: messagesHelper.emailMessage })
   email: string;
+
+  @ApiProperty()
+  avatar: string;
 
   @IsNotEmpty()
   @ApiProperty()

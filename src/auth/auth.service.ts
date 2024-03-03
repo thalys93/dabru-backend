@@ -21,6 +21,15 @@ export class AuthService {
 
     return {
       token: this.jwtService.sign(payload),
+      statusCode: 200,
+      userData: {
+        email: user.email,
+        role: user.role,
+        name: user.name,
+        lastName: user.lastName,
+        fullName: user.name + " " + user.lastName,
+        avatar: user.avatar,
+      },
     };
   }
 
